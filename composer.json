@@ -1,0 +1,11 @@
+{
+    "name": "andrewadcock/wp-drupalvm",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Andrew Adcock",
+            "email": "andrewadcock@gmail.com"
+        }
+    ],
+    "require": {}
+}
