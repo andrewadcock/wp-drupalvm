@@ -1,1 +1,9 @@
+## Composer default dir
 /vendor/
+
+
+## PHPStorm config
+.idea/*
+
+## Vagrant
+.vagrant/*
