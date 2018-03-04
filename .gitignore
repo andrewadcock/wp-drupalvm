@@ -6,6 +6,8 @@
 ## Composer default dir
 /vendor/
 
+## Web root
+/web/*
 
 ## PHPStorm config
 .idea/*
