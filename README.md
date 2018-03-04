@@ -15,11 +15,11 @@ By default we are installing the following
 
 
 Sometimes when running vagrant up the first time, nginx points to 
-`/var/www/html` instead of `/var/www/wp-drupalvm`. Most often, 
+`/var/www/html` instead of `/var/www/wp-drupalvm/web`. Most often, 
 running `vagrant reload --provision` will correct this.
 If that doesn't work you may need to edit 
 `/etc/nginx/sites-available/default` to set the root to 
-`/var/www/wp-drupalvm/public`. This is around line 41. 
+`/var/www/wp-drupalvm/web`. This is around line 41. 
 Then run `sudo /etc/init.d/nginx restart`. Still trying to figure this one out.
 
 ```

@@ -68,7 +68,7 @@ drush_make_options: "--no-gitinfofile"
 # composer based site deployment strategy.
 drupal_build_composer: false
 drupal_composer_path: "{{ config_dir }}/drupal.composer.json"
-drupal_composer_install_dir: "/var/www/wp-drupalvm/public"
+drupal_composer_install_dir: "/var/www/wp-drupalvm"
 drupal_composer_dependencies:
   - "drupal/devel:1.x-dev"
 
