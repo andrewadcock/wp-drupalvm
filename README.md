@@ -1,4 +1,8 @@
 
+## Settings
+Create a file in `/config` called `local.config.yml`. In this file you can
+override any of the wp-drupalvm settings, which will in turn, override the
+drupalvm defaults.
 
 ### Basic Settings
 Ubuntu 16.04
@@ -15,7 +19,8 @@ Sometimes when running vagrant up the first time, nginx points to
 running `vagrant reload --provision` will correct this.
 If that doesn't work you may need to edit 
 `/etc/nginx/sites-available/default` to set the root to 
-`/var/www/wp-drupalvm/public`. This is around line 41. Still trying to figure this one out.
+`/var/www/wp-drupalvm/public`. This is around line 41. 
+Then run `sudo /etc/init.d/nginx restart`. Still trying to figure this one out.
 
 ```
 server {
@@ -44,4 +49,4 @@ server {
 
 
 ### ToDo's
-Add support for untracked drupalvm config changes
+* Figure out why nginx is, occasionally, pointing to the wrong directory
