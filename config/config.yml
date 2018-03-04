@@ -287,7 +287,9 @@ composer_global_packages:
 # to reference the provisioning/ folder in Drupal VM or {{ config_dir }} to
 # reference the directory where your `config.yml` is.
 pre_provision_scripts: []
-post_provision_scripts: []
+post_provision_scripts:
+  # - "/var/www/wp-drupalvm/scripts/wp-setup.sh"
+
   # - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
 
 # MySQL Configuration.
