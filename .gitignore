@@ -3,6 +3,9 @@
 ## Local config file
 /config/local.config.yml
 
+## Symlinked wp-config file
+/wp-config.php
+
 ## Composer default dir
 /vendor/
 
