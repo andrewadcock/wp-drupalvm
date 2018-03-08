@@ -7,8 +7,31 @@
             "email": "andrewadcock@gmail.com"
         }
     ],
-    "require": {},
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "wordpress",
+                "type": "webroot",
+                "version": "4.0",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/WordPress/WordPress/archive/4.0.zip"
+                },
+                "require": {
+                    "fancyguy/webroot-installer": "1.0.0"
+                }
+            }
+        }
+    ],
+    "require": {
+        "wordpress": "4.*"
+    },
     "require-dev": {
         "geerlingguy/drupal-vm": "^4.8"
+    },
+    "extra": {
+        "webroot-dir": "web",
+        "webroot-package": "wordpress"
     }
 }

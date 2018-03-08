@@ -10,7 +10,7 @@
 vagrant_box: geerlingguy/ubuntu1604
 
 vagrant_user: vagrant
-vagrant_synced_folder_default_type: nfs
+vagrant_synced_folder_default_type: rsync
 vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
@@ -33,7 +33,7 @@ vagrant_synced_folders:
   # the drupal-vm folder.
   - local_path: .
     destination: /var/www/wp-drupalvm
-    type: nfs
+    type: rsync
     create: true
 
 # Memory and CPU to use for this VM.
@@ -287,7 +287,9 @@ composer_global_packages:
 # to reference the provisioning/ folder in Drupal VM or {{ config_dir }} to
 # reference the directory where your `config.yml` is.
 pre_provision_scripts: []
-post_provision_scripts: []
+post_provision_scripts:
+  - "/var/www/wp-drupalvm/scripts/wp-drupalvm-setup.sh"
+
   # - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
 
 # MySQL Configuration.

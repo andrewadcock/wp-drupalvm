@@ -18,7 +18,7 @@ Sometimes when running vagrant up the first time, nginx points to
 `/var/www/html` instead of `/var/www/wp-drupalvm/web`. Most often, 
 running `vagrant reload --provision` will correct this.
 If that doesn't work you may need to edit 
-`/etc/nginx/sites-available/default` to set the root to 
+`/etc/nginx/sites-enabled/wp-drupalvm.test.conf` to set the root to 
 `/var/www/wp-drupalvm/web`. This is around line 41. 
 Then run `sudo /etc/init.d/nginx restart`. Still trying to figure this one out.
 
@@ -46,6 +46,11 @@ server {
         root /var/www/wp-drupalvm/public;
 
 ```
+
+### Potential Fixes if you have issues
+Sometimes, you will hang on `Mounting NFS shared folders...`
+
+This _might_ be fixed by installing vbguest using the command `vagrant plugin install vagrant-vbguest`
 
 
 ### ToDo's
