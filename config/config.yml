@@ -216,19 +216,19 @@ installed_extras:
   # - drush
   # - elasticsearch
   # - java
-  - mailhog
+  #- mailhog
   # - memcached
   # - newrelic
   # - nodejs
-  - pimpmylog
+  #- pimpmylog
   # - redis
   # - ruby
   # - selenium
   # - solr
   # - tideways
   # - upload-progress
-  - varnish
-  - xdebug
+  #- varnish
+  #- xdebug
   # - xhprof # use `tideways` if you're installing PHP 7+
 
 # Add any extra apt or yum packages you would like installed.
