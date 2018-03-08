@@ -210,25 +210,25 @@ postgresql_users:
 # Comment out any extra utilities you don't want to install. If you don't want
 # to install *any* extras, set this value to an empty set, e.g. `[]`.
 installed_extras:
-  - adminer
+   - adminer
   # - blackfire
   # - drupalconsole
   # - drush
   # - elasticsearch
   # - java
-  #- mailhog
+   - mailhog
   # - memcached
   # - newrelic
   # - nodejs
-  #- pimpmylog
+   - pimpmylog
   # - redis
   # - ruby
   # - selenium
   # - solr
   # - tideways
   # - upload-progress
-  #- varnish
-  #- xdebug
+   - varnish
+   - xdebug
   # - xhprof # use `tideways` if you're installing PHP 7+
 
 # Add any extra apt or yum packages you would like installed.
