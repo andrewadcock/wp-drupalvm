@@ -1,18 +1,79 @@
 #!/bin/bash
 
+rootDir='/var/www';
+hostname='wp-drupalvm'
+localConfig=false;
+#localConfigFile='/var/www/$hostname/config/local.config.yml';
+nginxDir='/etc/nginx';
+nginxConfigDir=$nginxDir'/sites-enabled'
+
+
+echo "-------------------------"
+echo " Begin WP-DRUPALVM Setup"
+echo "-------------------------"
+
+# Find local config file, if it exists
+localConfigFile=( $(find $rootDir -name "local.config.yml") )
+
+# Include config-parse.sh
+. config-parse.sh
+
+if [ -f $localConfigFile ];
+then
+
+    localConfig=true;
+    echo -e "\n==>Local config file found"
+
+    # Read the yaml file
+    eval $(parse_yaml $localConfigFile "config_")
+
+    # Set hostname
+    hostname=$config_vagrant_hostname
+
+    # Reset Local Config File location
+    localConfigFile='/var/www/$hostname/config/local.config.yml';
+
+else
+    echo -e "\n==>No local config file. Using wp-drupalvm defaults"
+fi
 
 ## Update Nginx configs with defaults
-echo "Start Nginx Rewrites zzzzz"
-cd /var/www/wp-drupalvm/config/defaults/nginx
-cp _php_fastcgi.conf /etc/nginx/
-rm /etc/nginx/sites-enabled/wp-drupalvm.test.conf
-cp wp-drupalvm.test.conf /etc/nginx/sites-enabled/wp-drupalvm.test.conf
+echo -e"\n==> Start Nginx Rewrites"
+cd $rootDir/$hostname/config/defaults/nginx
+
+echo -e "\n==> Copy _php_fastcgi.conf to nginx directory"
+cp _php_fastcgi.conf $nginxDir
+
+echo -e "\n==> Remove drupalvm nginx conf"
+rm $nginxConfigDir/wp-drupalvm.test.conf
+
+echo -e "\n==> Replace nginx configuration file"
+cp wp-drupalvm.test.conf $nginxConfigDir/$hostname.conf
+
+# If a local config file exists, rewrite values
+if $localConfig;
+then
+    echo -e "\n==> Updating nginx configuration"
+    sed -i 's/wp-drupalvm/${hostname}/g' $nginxConfigDir/wp-drupalvm.test.conf
+fi
+
+echo -e "\n==> Restarting nginx"
 /etc/init.d/nginx restart
 
+# Rename wp-drupalvm directory
+cd $rootDir
+mv wp-drupalvm $hostname
+
 # Set up a local wp-config that is outside the web root
-cd /var/www/wp-drupalvm/web
-ln -s ../wp-config.php wp-config.php
-cp ../config/wp-config-default.php ../wp-config.php
+echo -e "\n==> Add symlink to wp-config"
+cd $rootDir/$hostname/web
 
+echo -e "\n==> Create symlink to wp-config.php"
+ln -s $rootDir/$hostname/web/wp-config.php wp-config.php
 
-touch /etc/nginx/sites-enabled/test.test
+echo -e "\n==> Write contents of wp-config.php"
+cp $rootDir/$hostname/web/config/wp-config-default.php $rootDir/$hostname/wp-config.php
+
+echo -e "\n==> Update wp-config.php"
+
+echo -e "\nwp-drupalvm setup complete"
