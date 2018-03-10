@@ -16,7 +16,7 @@ echo "-------------------------"
 localConfigFile=( $(find $rootDir -name "local.config.yml") )
 
 # Include config-parse.sh
-. config-parse.sh
+. $rootDir/$hostname/scripts/config-parse.sh
 
 if [ -f $localConfigFile ];
 then
@@ -37,16 +37,23 @@ else
     echo -e "\n==>No local config file. Using wp-drupalvm defaults"
 fi
 
+
+echo "---------------------------------";
+echo $hostname
+echo "---------------------------------";
 ## Update Nginx configs with defaults
 echo -e"\n==> Start Nginx Rewrites"
 cd $rootDir/$hostname/config/defaults/nginx
 
+## Copy nginx config stub
 echo -e "\n==> Copy _php_fastcgi.conf to nginx directory"
 cp _php_fastcgi.conf $nginxDir
 
+# Remove the wp-drupalvm nginx config
 echo -e "\n==> Remove drupalvm nginx conf"
 rm $nginxConfigDir/wp-drupalvm.test.conf
 
+# Add new config file
 echo -e "\n==> Replace nginx configuration file"
 cp wp-drupalvm.test.conf $nginxConfigDir/$hostname.conf
 
@@ -60,9 +67,6 @@ fi
 echo -e "\n==> Restarting nginx"
 /etc/init.d/nginx restart
 
-# Rename wp-drupalvm directory
-cd $rootDir
-mv wp-drupalvm $hostname
 
 # Set up a local wp-config that is outside the web root
 echo -e "\n==> Add symlink to wp-config"
