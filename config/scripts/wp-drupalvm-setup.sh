@@ -16,7 +16,7 @@ echo "-------------------------"
 localConfigFile=( $(find $rootDir -name "local.config.yml") )
 
 # Include config-parse.sh
-. $rootDir/$hostname/scripts/config-parse.sh
+. $(dirname $0)/config-parse.sh
 
 if [ -f $localConfigFile ];
 then
@@ -42,7 +42,7 @@ echo "---------------------------------";
 echo $hostname
 echo "---------------------------------";
 ## Update Nginx configs with defaults
-echo -e"\n==> Start Nginx Rewrites"
+echo -e "\n==> Start Nginx Rewrites"
 cd $rootDir/$hostname/config/defaults/nginx
 
 ## Copy nginx config stub
@@ -60,8 +60,13 @@ cp wp-drupalvm.test.conf $nginxConfigDir/$hostname.conf
 # If a local config file exists, rewrite values
 if $localConfig;
 then
+echo "---------------------------------";
+echo "Hostname: "$hostname
+echo "---------------------------------";
     echo -e "\n==> Updating nginx configuration"
-    sed -i 's/wp-drupalvm/${hostname}/g' $nginxConfigDir/wp-drupalvm.test.conf
+    sed -i "s/wp-drupalvm.test/$hostname/g" $nginxConfigDir/$hostname.conf
+    sed -i "s/wp-drupalvm/$hostname/g" $nginxConfigDir/$hostname.conf
+    #sed -i 's/wp-drupalvm/bacon/g' $nginxConfigDir/$hostname.conf
 fi
 
 echo -e "\n==> Restarting nginx"
@@ -73,10 +78,10 @@ echo -e "\n==> Add symlink to wp-config"
 cd $rootDir/$hostname/web
 
 echo -e "\n==> Create symlink to wp-config.php"
-ln -s $rootDir/$hostname/web/wp-config.php wp-config.php
+ln -s $rootDir/$hostname/wp-config.php wp-config.php
 
 echo -e "\n==> Write contents of wp-config.php"
-cp $rootDir/$hostname/web/config/wp-config-default.php $rootDir/$hostname/wp-config.php
+cp $rootDir/$hostname/config/wp-config-default.php $rootDir/$hostname/wp-config.php
 
 echo -e "\n==> Update wp-config.php"
 

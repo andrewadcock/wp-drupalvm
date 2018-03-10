@@ -288,7 +288,7 @@ composer_global_packages:
 # reference the directory where your `config.yml` is.
 pre_provision_scripts: []
 post_provision_scripts:
-  - "/var/www/wp-drupalvm/scripts/wp-drupalvm-setup.sh"
+  - "{{ config_dir }}/scripts/wp-drupalvm-setup.sh"
 
   # - "{{ playbook_dir }}/../examples/scripts/configure-solr.sh"
 
