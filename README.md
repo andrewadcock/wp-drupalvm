@@ -1,11 +1,23 @@
+## Usage
 
-## Settings
 Create a file in `/config` called `local.config.yml`. In this file you can
 override any of the wp-drupalvm settings, which will in turn, override the
 drupalvm defaults.
 
+If you reset the hostname, you *MUST* rename the synced folders destination.
+Otherwise, you will run into problems and have to manually rename the directory 
+after running vagrant up.
+
+```
+vagrant_hostname: newsitename.test
+vagrant_synced_folders:
+  - local_path: .
+    destination: /var/www/newsitename.test
+```
+
 ### Basic Settings
-Ubuntu 16.04
+Basic Configuration can be found in `/wp-drupalvm/config/config.yml`. All of
+these settings can be overwritten in your `local.config.yml`
 
 
 ### Special Notes
@@ -14,6 +26,7 @@ By default we are installing the following
 * wp-cli
 
 
+##### Wrong Directory?
 Sometimes when running vagrant up the first time, nginx points to 
 `/var/www/html` instead of `/var/www/wp-drupalvm/web`. Most often, 
 running `vagrant reload --provision` will correct this.
@@ -50,8 +63,9 @@ server {
 ### Potential Fixes if you have issues
 Sometimes, you will hang on `Mounting NFS shared folders...`
 
-This _might_ be fixed by installing vbguest using the command `vagrant plugin install vagrant-vbguest`
-
+* This _might_ be fixed by (re)installing vbguest using the command `vagrant plugin install vagrant-vbguest`
+* Sometimes the system clock gets thrown off. Restart your computer and try again
+* VPN's can also cause issues. If possible, disconnect from the VPN and try again
 
 ### ToDo's
 * Figure out why nginx is, occasionally, pointing to the wrong directory
